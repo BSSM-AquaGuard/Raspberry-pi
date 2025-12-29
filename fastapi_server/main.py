@@ -69,7 +69,7 @@ def read_serial_data():
                 print(f"✅ 시리얼 포트({SERIAL_PORT})에 성공적으로 연결되었습니다. 데이터 수신 대기 중...")
                 while True:
                     if ser.in_waiting > 0:
-                        line = ser.readline().decode('utf-8').strip()
+                        line = ser.readline().decode('utf-8', errors='ignore').strip()
                         if line:
                             print(f"受信データ: {line}")
                             try:
