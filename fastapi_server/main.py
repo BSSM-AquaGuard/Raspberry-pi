@@ -73,27 +73,19 @@ def read_serial_data():
                         if line:
                             print(f"受信データ: {line}")
                             try:
-                                data = json.loads(line)
-                                
-                                # DB 세션 생성 및 데이터 저장
+                                # JSON 파싱 로직을 제거하고, 수신된 라인 전체를 payload에 저장
                                 db = SessionLocal()
                                 db_data = LoRaData(
-                                    device_id=data.get("device_id"),
-                                    temperature=data.get("temperature"),
-                                    turbidity=data.get("turbidity"),
-                                    ph=data.get("ph"),
-                                    image_ref=data.get("image_ref"),
-                                    payload=json.dumps(data) # 원본 JSON 저장
+                                    device_id="unknown-sender", # 송신자 ID를 알 수 없으므로 기본값 사용
+                                    payload=line
                                 )
                                 db.add(db_data)
                                 db.commit()
-                                print(f"📝 데이터베이스에 저장됨: {db_data.device_id}")
+                                print(f"📝 데이터베이스에 저장됨: {line}")
                                 db.close()
 
-                            except json.JSONDecodeError:
-                                print(f"⚠️ JSON 파싱 오류: '{line}'")
                             except Exception as e:
-                                print(f"🚨 데이터 처리 중 오류 발생: {e}")
+                                print(f"🚨 데이터 처리 또는 DB 저장 중 오류 발생: {e}")
         except serial.SerialException:
             print(f"❌ 시리얼 포트({SERIAL_PORT})를 찾을 수 없거나 연결에 실패했습니다. 5초 후 재시도합니다.")
             time.sleep(5)
