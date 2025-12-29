@@ -28,7 +28,7 @@ def read_serial_data():
                     if ser.in_waiting > 0:
                         line = ser.readline().decode('utf-8', errors='ignore').strip()
                         if line:
-                            print(f"受信データ: {line}")
+                            print(f"Received data: {line}")
                             try:
                                 # JSON 파싱 로직을 제거하고, 수신된 라인 전체를 payload에 저장
                                 db = SessionLocal()

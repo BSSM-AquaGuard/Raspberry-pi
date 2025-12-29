@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+venv/
+.pytest_cache/
+.vscode/
+
+# Database
+lora_data.db
+
+# Arduino / ESP32
+*.ino.hex
+*.ino.bin
+.pio/
+
+# Environment variables
+.env
+
+# macOS
+.DS_Store
+
+# Gemini related
+.geminiignore
+.gemini/
+
+# Logs
+*.log
